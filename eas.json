@@ -1,0 +1,34 @@
+{
+  "cli": {
+    "version": ">= 7.0.0",
+    "requireCommit": false
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      },
+      "env": {
+        "GOOGLE_SERVICES_FILE": "dummy"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "GOOGLE_SERVICES_FILE": "dummy"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
