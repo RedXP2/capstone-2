@@ -33,7 +33,7 @@
       "icon": "./assets/icon.png",
       "package": "com.musclerecovery.app",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 8,
+      "versionCode": 9,
       "permissions": [
         "INTERNET"
       ]

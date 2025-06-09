@@ -1,23 +1,55 @@
+/**
+ * @fileoverview Error Boundary Component
+ * A React component that catches JavaScript errors anywhere in its child component tree,
+ * logs those errors, and displays a fallback UI instead of the component tree that crashed.
+ */
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { useTheme } from '../srccontext/ThemeContext';
 
+/**
+ * Class component that implements error boundary functionality
+ * @class
+ * @extends {React.Component}
+ */
 class ErrorBoundaryClass extends React.Component {
+  /**
+   * Initialize error boundary state
+   * @param {Object} props - Component props
+   * @param {Object} props.theme - Theme object for styling
+   * @param {Function} [props.onReset] - Optional callback for reset action
+   */
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
+  /**
+   * Update state when an error occurs
+   * @static
+   * @param {Error} error - The error that was caught
+   * @returns {Object} New state with error information
+   */
   static getDerivedStateFromError(error) {
     return { hasError: true, error };
   }
 
+  /**
+   * Lifecycle method called when an error is caught
+   * @param {Error} error - The error that was caught
+   * @param {React.ErrorInfo} errorInfo - Additional error information
+   */
   componentDidCatch(error, errorInfo) {
     // Log error to your preferred logging service
     console.error('Error caught by boundary:', error, errorInfo);
   }
 
+  /**
+   * Render either the error UI or the children
+   * @returns {React.ReactNode} The rendered component
+   */
   render() {
     const { hasError, error } = this.state;
     const { theme } = this.props;

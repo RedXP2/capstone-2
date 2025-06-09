@@ -52,14 +52,92 @@ npm start
 6. **Profile Management**: Update your profile information in Settings
 
 ## Technologies Used
-- **React Native**: Mobile app framework
-- **Expo**: Development platform and tools
-- **Firebase Authentication**: User authentication
-- **Cloud Firestore**: Database for storing muscle entries
-- **Zustand**: State management
-- **React Navigation**: Navigation between screens
-- **Expo Secure Store**: Secure local storage
-- **React Native Reanimated**: Animations
+- **React Native**: Mobile app framework for cross-platform development
+- **Expo**: Development platform and tools for React Native
+- **Firebase Authentication**: User authentication and session management
+- **Cloud Firestore**: NoSQL database for storing muscle entries
+- **Zustand**: Lightweight state management with hooks
+- **React Navigation**: Screen navigation and routing
+- **Expo Secure Store**: Secure local storage for sensitive data
+- **React Native Reanimated**: High-performance animations
+- **Jest & React Testing Library**: Testing framework and utilities
+- **EAS Build**: Build system for creating production apps
+
+## Architecture
+The application follows a modern React Native architecture with these key components:
+
+### State Management
+- **Auth Store**: Manages user authentication state and operations
+- **Muscle Store**: Handles muscle entry data and operations
+- **Error Handling**: Global error boundary and custom error hooks
+
+### Key Components
+- **ErrorBoundary**: Catches and handles React component errors
+- **Navigation**: Bottom tabs and stack navigation for screen management
+- **Screens**: Home, Add Entry, Profile, and Settings screens
+- **Custom Hooks**: Error handling, authentication, and data management
+
+### Testing
+The project includes comprehensive testing:
+```bash
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+Test coverage includes:
+- Unit tests for components and hooks
+- Integration tests for navigation and error handling
+- Store testing for auth and muscle data management
+- Performance testing for critical operations
+
+### Deployment
+The project uses EAS (Expo Application Services) for building and deploying:
+
+```bash
+# Build Android Preview
+npm run build:android
+
+# Build iOS Preview
+npm run build:ios
+
+# Build Android Production
+npm run build:production:android
+
+# Build iOS Production
+npm run build:production:ios
+
+# Submit to stores
+npm run submit:android
+npm run submit:ios
+```
+
+Build profiles are configured in `eas.json` for different environments:
+- Preview: Development and testing builds
+- Production: App store ready builds
+
+## Code Structure
+```
+src/
+├── components/     # Reusable UI components
+├── screens/       # Screen components
+├── hooks/         # Custom React hooks
+├── store/         # State management
+├── config/        # Configuration files
+└── utils/         # Utility functions
+
+__tests__/
+├── components/    # Component tests
+├── screens/       # Screen tests
+├── hooks/        # Hook tests
+├── integration/  # Integration tests
+└── store/        # Store tests
+```
 
 ## Future Improvements
 - Push notifications when muscles are ready to train
