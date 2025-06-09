@@ -54,9 +54,9 @@ function MainTabs() {
           tabBarInactiveTintColor: theme.textSecondary,
           tabBarStyle: { 
             height: 70,
+            backgroundColor: theme.card,
             borderTopWidth: 1,
             borderTopColor: theme.border,
-            backgroundColor: theme.card,
             elevation: 8,
             shadowColor: '#000',
             shadowOffset: { width: 0, height: -2 },
@@ -77,6 +77,16 @@ function MainTabs() {
           },
           swipeEnabled: true,
           animationEnabled: true,
+          lazy: true,
+          lazyPlaceholder: () => null,
+          tabBarPressColor: `${theme.primary}20`,
+          tabBarPressOpacity: 0.8,
+          animationDuration: 250,
+          tabBarBounces: false,
+          showLabel: true,
+          showIcon: true,
+          freezeOnBlur: true,
+          detachInactiveScreens: false,
           tabBarIcon: ({ focused, color }) => {
             let iconName;
 
@@ -110,21 +120,24 @@ function MainTabs() {
           name="Home" 
           component={HomeScreen}
           options={{
-            headerShown: false
+            headerShown: false,
+            tabBarLabel: 'Recovery'
           }}
         />
         <Tab.Screen 
           name="Add" 
           component={AddEntryScreen}
           options={{
-            headerShown: false
+            headerShown: false,
+            tabBarLabel: 'Add Entry'
           }}
         />
         <Tab.Screen 
           name="Profile" 
           component={ProfileScreen}
           options={{
-            headerShown: false
+            headerShown: false,
+            tabBarLabel: 'Profile'
           }}
         />
       </Tab.Navigator>
@@ -133,7 +146,32 @@ function MainTabs() {
 
 function MainStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        animation: 'slide_from_right',
+        animationDuration: 300,
+        gestureEnabled: true,
+        gestureDirection: 'horizontal',
+        cardStyle: { backgroundColor: 'transparent' },
+        cardOverlayEnabled: true,
+        cardStyleInterpolator: ({ current: { progress }, closing, layouts }) => ({
+          cardStyle: {
+            transform: [
+              {
+                translateX: progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: closing ? [-layouts.screen.width, 0] : [layouts.screen.width, 0],
+                }),
+              },
+            ],
+            opacity: progress.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0.5, 1],
+            }),
+          },
+        }),
+      }}
+    >
       <Stack.Screen 
         name="MainTabs" 
         component={MainTabs} 
