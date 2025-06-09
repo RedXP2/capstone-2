@@ -109,7 +109,10 @@ const HomeScreen = ({ navigation }) => {
       >
         <View style={styles.cardHeader}>
           <Text style={[styles.muscleName, { color: theme.text }]}>{item.muscleName}</Text>
-          <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+          <View 
+            testID={`status-badge-${item.id}`}
+            style={[styles.statusBadge, { backgroundColor: statusColor }]}
+          >
             <Text style={styles.statusText}>
               {item.status === 'ready' ? 'Ready' : `${item.recoveryProgress}/${item.recoveryTime} days`}
             </Text>
@@ -139,7 +142,11 @@ const HomeScreen = ({ navigation }) => {
   if (isLoading && !refreshing) {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
-        <ActivityIndicator size="large" color={theme.primary} />
+        <ActivityIndicator 
+          testID="loading-indicator"
+          size="large" 
+          color={theme.primary} 
+        />
       </View>
     );
   }
@@ -150,6 +157,7 @@ const HomeScreen = ({ navigation }) => {
         <Text style={styles.headerTitle}>Muscle Recovery</Text>
       </View>
       <FlatList
+        testID="muscle-entries-list"
         data={muscleEntries}
         renderItem={renderItem}
         keyExtractor={item => item.id}
