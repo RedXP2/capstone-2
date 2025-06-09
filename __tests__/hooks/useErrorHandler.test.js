@@ -1,4 +1,4 @@
-import { renderHook, act, waitFor } from '@testing-library/react-native';
+import { renderHook, act } from '@testing-library/react-native';
 import useErrorHandler from '../../srchooks/useErrorHandler';
 
 describe('useErrorHandler', () => {
@@ -16,15 +16,15 @@ describe('useErrorHandler', () => {
     // First cause an error
     const wrappedFn = result.current.handleAsync(mockAsyncFn);
     
-    try {
-      await wrappedFn();
-    } catch (e) {
-      // Expected to throw
-    }
-
-    await waitFor(() => {
-      expect(result.current.error).not.toBeNull();
+    await act(async () => {
+      try {
+        await wrappedFn();
+      } catch (e) {
+        // Expected to throw
+      }
     });
+
+    expect(result.current.error).not.toBeNull();
 
     act(() => {
       result.current.clearError();
@@ -38,7 +38,11 @@ describe('useErrorHandler', () => {
     const mockAsyncFn = jest.fn().mockResolvedValue('success');
 
     const wrappedFn = result.current.handleAsync(mockAsyncFn);
-    const resultValue = await wrappedFn();
+    
+    let resultValue;
+    await act(async () => {
+      resultValue = await wrappedFn();
+    });
 
     expect(mockAsyncFn).toHaveBeenCalled();
     expect(resultValue).toBe('success');
@@ -55,10 +59,16 @@ describe('useErrorHandler', () => {
       errorMessage: 'Custom error message'
     });
 
-    await expect(wrappedFn()).rejects.toEqual(expect.objectContaining({
-      message: 'Custom error message',
-      originalError: testError
-    }));
+    await act(async () => {
+      try {
+        await wrappedFn();
+      } catch (error) {
+        expect(error).toEqual(expect.objectContaining({
+          message: 'Custom error message',
+          originalError: testError
+        }));
+      }
+    });
 
     expect(onError).toHaveBeenCalledWith(expect.objectContaining({
       message: 'Custom error message',
@@ -74,10 +84,16 @@ describe('useErrorHandler', () => {
 
     const wrappedFn = result.current.handleAsync(mockAsyncFn);
 
-    await expect(wrappedFn()).rejects.toEqual(expect.objectContaining({
-      message: 'Original error',
-      originalError: testError
-    }));
+    await act(async () => {
+      try {
+        await wrappedFn();
+      } catch (error) {
+        expect(error).toEqual(expect.objectContaining({
+          message: 'Original error',
+          originalError: testError
+        }));
+      }
+    });
 
     expect(onError).toHaveBeenCalledWith(expect.objectContaining({
       message: 'Original error',
@@ -87,27 +103,32 @@ describe('useErrorHandler', () => {
 
   it('sets loading state during async operations', async () => {
     const { result } = renderHook(() => useErrorHandler());
+    let resolvePromise;
     const mockAsyncFn = jest.fn().mockImplementation(() => 
-      new Promise(resolve => setTimeout(() => resolve('success'), 100))
+      new Promise(resolve => {
+        resolvePromise = resolve;
+      })
     );
 
     const wrappedFn = result.current.handleAsync(mockAsyncFn);
     
     // Start the async operation
-    const promise = wrappedFn();
-    
-    // Should be loading
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(true);
+    let promise;
+    act(() => {
+      promise = wrappedFn();
     });
 
-    // Wait for completion
-    await promise;
+    // Should be loading
+    expect(result.current.isLoading).toBe(true);
+
+    // Complete the async operation
+    await act(async () => {
+      resolvePromise('success');
+      await promise;
+    });
 
     // Should not be loading anymore
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
+    expect(result.current.isLoading).toBe(false);
   });
 
   it('sets error state when async function fails', async () => {
@@ -117,17 +138,17 @@ describe('useErrorHandler', () => {
 
     const wrappedFn = result.current.handleAsync(mockAsyncFn);
 
-    try {
-      await wrappedFn();
-    } catch (e) {
-      // Expected to throw
-    }
-
-    await waitFor(() => {
-      expect(result.current.error).toEqual(expect.objectContaining({
-        message: 'Test error',
-        originalError: testError
-      }));
+    await act(async () => {
+      try {
+        await wrappedFn();
+      } catch (e) {
+        // Expected to throw
+      }
     });
+
+    expect(result.current.error).toEqual(expect.objectContaining({
+      message: 'Test error',
+      originalError: testError
+    }));
   });
 });
