@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { 
   View, 
   Text, 
@@ -37,10 +37,9 @@ const HomeScreen = ({ navigation }) => {
 
   /**
    * Handles pull-to-refresh functionality
-   * @async
-   * @function onRefresh
+   * Memoized to prevent recreation on every render
    */
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
       await loadEntries();
@@ -53,17 +52,13 @@ const HomeScreen = ({ navigation }) => {
     } finally {
       setRefreshing(false);
     }
-  };
+  }, [loadEntries]);
 
   /**
    * Determines the status color based on recovery progress
-   * @param {Object} entry - Muscle entry object
-   * @param {string} entry.status - Current status of the muscle
-   * @param {number} entry.recoveryProgress - Current recovery progress
-   * @param {number} entry.recoveryTime - Total recovery time needed
-   * @returns {string} Hex color code for the status
+   * Memoized to prevent recalculation on every render
    */
-  const getStatusColor = (entry) => {
+  const getStatusColor = useCallback((entry) => {
     if (entry.status === 'ready') {
       return '#4CAF50'; // Green
     }
@@ -74,27 +69,26 @@ const HomeScreen = ({ navigation }) => {
     if (progress < 0.6) return '#FF9800'; // Orange
     if (progress < 0.9) return '#FFEB3B'; // Yellow
     return '#8BC34A'; // Light green
-  };
+  }, []);
+
+  /**
+   * Handles navigation to entry detail screen
+   * Memoized to prevent recreation on every render
+   */
+  const handleEntryPress = useCallback((entryId) => {
+    try {
+      navigation.navigate('EntryDetail', { entryId });
+    } catch (error) {
+      Alert.alert('Navigation Error', 'Failed to open entry details');
+    }
+  }, [navigation]);
 
   /**
    * Renders individual muscle entry item
-   * @param {Object} params - Render item parameters
-   * @param {Object} params.item - Muscle entry data
-   * @returns {React.Component} Rendered muscle entry card
+   * Memoized to prevent unnecessary re-renders
    */
-  const renderItem = ({ item }) => {
+  const renderItem = useCallback(({ item }) => {
     const statusColor = getStatusColor(item);
-    
-    /**
-     * Handles navigation to entry detail screen
-     */
-    const handlePress = () => {
-      try {
-        navigation.navigate('EntryDetail', { entryId: item.id });
-      } catch (error) {
-        Alert.alert('Navigation Error', 'Failed to open entry details');
-      }
-    };
     
     return (
       <TouchableOpacity
@@ -103,7 +97,7 @@ const HomeScreen = ({ navigation }) => {
           borderLeftWidth: 5,
           backgroundColor: theme.card
         }]}
-        onPress={handlePress}
+        onPress={() => handleEntryPress(item.id)}
         accessibilityLabel={`${item.muscleName} muscle entry`}
         accessibilityHint="Tap to view details"
       >
@@ -137,7 +131,25 @@ const HomeScreen = ({ navigation }) => {
         </View>
       </TouchableOpacity>
     );
-  };
+  }, [getStatusColor, theme, handleEntryPress]);
+
+  /**
+   * Memoized key extractor for FlatList performance
+   */
+  const keyExtractor = useCallback((item) => item.id, []);
+
+  /**
+   * Memoized empty component to prevent recreation
+   */
+  const EmptyComponent = useMemo(() => (
+    <View style={styles.emptyContainer}>
+      <Ionicons name="fitness-outline" size={64} color={theme.textSecondary} />
+      <Text style={[styles.emptyText, { color: theme.textSecondary }]}>No muscle entries yet</Text>
+      <Text style={[styles.emptySubText, { color: theme.textSecondary }]}>
+        Swipe to the next page to add your first muscle group!
+      </Text>
+    </View>
+  ), [theme.textSecondary]);
 
   if (isLoading && !refreshing) {
     return (
@@ -160,19 +172,20 @@ const HomeScreen = ({ navigation }) => {
         testID="muscle-entries-list"
         data={muscleEntries}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={keyExtractor}
         contentContainerStyle={styles.listContainer}
         refreshing={refreshing}
         onRefresh={onRefresh}
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Ionicons name="fitness-outline" size={64} color={theme.textSecondary} />
-            <Text style={[styles.emptyText, { color: theme.textSecondary }]}>No muscle entries yet</Text>
-            <Text style={[styles.emptySubText, { color: theme.textSecondary }]}>
-              Swipe to the next page to add your first muscle group!
-            </Text>
-          </View>
-        }
+        ListEmptyComponent={EmptyComponent}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={5}
+        windowSize={5}
+        initialNumToRender={5}
+        getItemLayout={(data, index) => ({
+          length: 140, // Approximate height of each card
+          offset: 140 * index,
+          index,
+        })}
       />
     </View>
   );
