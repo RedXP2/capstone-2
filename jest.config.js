@@ -11,6 +11,9 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
+    '^firebase/auth$': '<rootDir>/__mocks__/firebase-auth.js',
+    '^firebase/firestore$': '<rootDir>/__mocks__/firebase-firestore.js',
+    '^firebase/app$': '<rootDir>/__mocks__/firebase-app.js',
   },
   collectCoverage: true,
   collectCoverageFrom: [

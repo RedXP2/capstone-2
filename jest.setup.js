@@ -15,12 +15,26 @@ jest.mock('expo-secure-store', () => ({
 }));
 
 // Mock firebase
-jest.mock('./srcconfig/firebase', () => ({
-  firebase: {
-    firestore: jest.fn(),
+jest.mock('./src/config/firebase', () => ({
+  auth: {
+    signInWithEmailAndPassword: jest.fn(),
+    createUserWithEmailAndPassword: jest.fn(),
+    signOut: jest.fn(),
+    onAuthStateChanged: jest.fn(),
   },
   db: {
-    collection: jest.fn(),
+    collection: jest.fn(() => ({
+      add: jest.fn(),
+      doc: jest.fn(() => ({
+        update: jest.fn(),
+        delete: jest.fn(),
+      })),
+      where: jest.fn(() => ({
+        orderBy: jest.fn(() => ({
+          onSnapshot: jest.fn(),
+        })),
+      })),
+    })),
   },
 }));
 
