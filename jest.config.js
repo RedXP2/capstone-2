@@ -14,6 +14,9 @@ module.exports = {
     '^firebase/auth$': '<rootDir>/__mocks__/firebase-auth.js',
     '^firebase/firestore$': '<rootDir>/__mocks__/firebase-firestore.js',
     '^firebase/app$': '<rootDir>/__mocks__/firebase-app.js',
+    '^firebase/compat/app$': '<rootDir>/__mocks__/firebase-compat.js',
+    '^firebase/compat/auth$': '<rootDir>/__mocks__/firebase-compat.js',
+    '^firebase/compat/firestore$': '<rootDir>/__mocks__/firebase-compat.js',
   },
   collectCoverage: true,
   collectCoverageFrom: [
