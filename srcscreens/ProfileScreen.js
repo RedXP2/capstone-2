@@ -134,7 +134,7 @@ const ProfileScreen = () => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
         
-        <Text style={[styles.versionText, { color: theme.textSecondary }]}>Version 1.0.0</Text>
+        <Text style={[styles.versionText, { color: theme.textSecondary }]}>Version 1.1.1</Text>
       </ScrollView>
     </View>
   );

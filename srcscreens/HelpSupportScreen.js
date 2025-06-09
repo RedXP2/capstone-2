@@ -47,7 +47,7 @@ const HelpSupportScreen = () => {
           <View style={styles.faqItem}>
             <Text style={[styles.question, { color: theme.primary }]}>How do I change my profile name?</Text>
             <Text style={[styles.answer, { color: theme.text }]}>
-              Go to Settings > Edit Profile, then enter your new name and tap "Update Name".
+              Go to Settings → Edit Profile, then enter your new name and tap "Update Name".
             </Text>
           </View>
           
@@ -62,6 +62,20 @@ const HelpSupportScreen = () => {
             <Text style={[styles.question, { color: theme.primary }]}>How do I enable dark mode?</Text>
             <Text style={[styles.answer, { color: theme.text }]}>
               Go to Settings and toggle the "Dark Mode" switch to enable or disable dark theme.
+            </Text>
+          </View>
+          
+          <View style={styles.faqItem}>
+            <Text style={[styles.question, { color: theme.primary }]}>What testing has been done on this app?</Text>
+            <Text style={[styles.answer, { color: theme.text }]}>
+              The app includes comprehensive testing with Jest and React Testing Library, covering unit tests for components and hooks, integration tests for navigation and error handling, store testing for authentication and muscle data management, and performance testing for critical operations.
+            </Text>
+          </View>
+          
+          <View style={styles.faqItem}>
+            <Text style={[styles.question, { color: theme.primary }]}>Is the source code available?</Text>
+            <Text style={[styles.answer, { color: theme.text }]}>
+              Yes, this is an open-source project created as part of a Software Development Bootcamp. The code follows modern React Native architecture with proper error handling, state management, and comprehensive testing.
             </Text>
           </View>
         </View>

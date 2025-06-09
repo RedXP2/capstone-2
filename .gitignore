@@ -19,3 +19,6 @@ web-build/
 # Native folders for prebuild
 /android
 /ios
+
+# Test coverage
+coverage/

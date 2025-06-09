@@ -1,7 +1,7 @@
 # Muscle Recovery App
 
 ## Project Overview
-A mobile application designed to help fitness enthusiasts track muscle recovery after workouts, ensuring each muscle group receives adequate rest before training it again. The app provides real-time countdowns and visual indicators to optimize training schedules and prevent overtraining.
+A mobile application (built for Android) designed to help fitness enthusiasts track muscle recovery after workouts, ensuring each muscle group receives adequate rest before training it again. The app provides real-time countdowns and visual indicators to optimize training schedules and prevent overtraining.
 
 ## Features
 - Track individual muscle groups with customizable recovery times
