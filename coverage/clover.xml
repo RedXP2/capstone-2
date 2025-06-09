@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1749448103967" clover="3.2.0">
-  <project timestamp="1749448103967" name="All files">
-    <metrics statements="684" coveredstatements="49" conditionals="441" coveredconditionals="12" methods="143" coveredmethods="12" elements="1268" coveredelements="73" complexity="0" loc="684" ncloc="684" packages="7" files="22" classes="22"/>
+<coverage generated="1749458816565" clover="3.2.0">
+  <project timestamp="1749458816565" name="All files">
+    <metrics statements="684" coveredstatements="83" conditionals="441" coveredconditionals="21" methods="143" coveredmethods="21" elements="1268" coveredelements="125" complexity="0" loc="684" ncloc="684" packages="7" files="22" classes="22"/>
     <package name="Capstone Project 2">
       <metrics statements="60" coveredstatements="0" conditionals="36" coveredconditionals="0" methods="23" coveredmethods="0"/>
       <file name="App.js" path="C:\Users\Willy\Downloads\Bootcamp\Assignments\Capstone Project 2\Capstone Project 2\App.js">
@@ -75,27 +75,27 @@
       </file>
     </package>
     <package name="Capstone Project 2.srccomponents">
-      <metrics statements="37" coveredstatements="0" conditionals="14" coveredconditionals="0" methods="12" coveredmethods="0"/>
+      <metrics statements="37" coveredstatements="15" conditionals="14" coveredconditionals="3" methods="12" coveredmethods="5"/>
       <file name="ErrorBoundary.js" path="C:\Users\Willy\Downloads\Bootcamp\Assignments\Capstone Project 2\Capstone Project 2\srccomponents\ErrorBoundary.js">
-        <metrics statements="18" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="6" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="26" count="0" type="stmt"/>
+        <metrics statements="18" coveredstatements="15" conditionals="6" coveredconditionals="3" methods="6" coveredmethods="5"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="22" count="9" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="25" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="4" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="37" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
+        <line num="47" count="5" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="88" count="6" type="stmt"/>
+        <line num="89" count="5" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
       </file>
       <file name="SwipeableTabView.js" path="C:\Users\Willy\Downloads\Bootcamp\Assignments\Capstone Project 2\Capstone Project 2\srccomponents\SwipeableTabView.js">
         <metrics statements="14" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="4" coveredmethods="0"/>
@@ -138,56 +138,56 @@
       <metrics statements="25" coveredstatements="18" conditionals="6" coveredconditionals="2" methods="5" coveredmethods="4"/>
       <file name="ThemeContext.js" path="C:\Users\Willy\Downloads\Bootcamp\Assignments\Capstone Project 2\Capstone Project 2\srccontext\ThemeContext.js">
         <metrics statements="25" coveredstatements="18" conditionals="6" coveredconditionals="2" methods="5" coveredmethods="4"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="33" count="7" type="stmt"/>
-        <line num="34" count="7" type="stmt"/>
-        <line num="37" count="7" type="stmt"/>
-        <line num="38" count="7" type="stmt"/>
-        <line num="39" count="7" type="stmt"/>
-        <line num="40" count="7" type="stmt"/>
-        <line num="41" count="7" type="cond" truecount="1" falsecount="1"/>
-        <line num="42" count="7" type="stmt"/>
-        <line num="43" count="7" type="stmt"/>
-        <line num="44" count="7" type="cond" truecount="1" falsecount="1"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="33" count="12" type="stmt"/>
+        <line num="34" count="12" type="stmt"/>
+        <line num="37" count="12" type="stmt"/>
+        <line num="38" count="10" type="stmt"/>
+        <line num="39" count="10" type="stmt"/>
+        <line num="40" count="10" type="stmt"/>
+        <line num="41" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="42" count="10" type="stmt"/>
+        <line num="43" count="10" type="stmt"/>
+        <line num="44" count="10" type="cond" truecount="1" falsecount="1"/>
         <line num="47" count="0" type="stmt"/>
-        <line num="51" count="7" type="stmt"/>
-        <line num="55" count="7" type="stmt"/>
+        <line num="51" count="10" type="stmt"/>
+        <line num="55" count="12" type="stmt"/>
         <line num="56" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
         <line num="58" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="61" count="0" type="stmt"/>
         <line num="62" count="0" type="stmt"/>
         <line num="64" count="0" type="stmt"/>
-        <line num="68" count="7" type="stmt"/>
-        <line num="76" count="9" type="stmt"/>
+        <line num="68" count="12" type="stmt"/>
+        <line num="76" count="15" type="stmt"/>
       </file>
     </package>
     <package name="Capstone Project 2.srchooks">
-      <metrics statements="19" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <metrics statements="19" coveredstatements="19" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
       <file name="useErrorHandler.js" path="C:\Users\Willy\Downloads\Bootcamp\Assignments\Capstone Project 2\Capstone Project 2\srchooks\useErrorHandler.js">
-        <metrics statements="19" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="9" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
+        <metrics statements="19" coveredstatements="19" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <line num="9" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="15" type="stmt"/>
+        <line num="20" count="15" type="cond" truecount="1" falsecount="0"/>
+        <line num="21" count="6" type="stmt"/>
+        <line num="22" count="6" type="stmt"/>
+        <line num="23" count="6" type="stmt"/>
+        <line num="24" count="6" type="stmt"/>
+        <line num="25" count="6" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="33" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="38" count="6" type="stmt"/>
+        <line num="46" count="15" type="stmt"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="50" count="15" type="stmt"/>
       </file>
     </package>
     <package name="Capstone Project 2.srcscreens">
