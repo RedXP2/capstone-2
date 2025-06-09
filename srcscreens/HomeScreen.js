@@ -5,13 +5,20 @@ import {
   FlatList, 
   StyleSheet, 
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { useMuscleStore } from '../srcstore/muscleStore';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../srccontext/ThemeContext';
-
+/**
+ * HomeScreen component displays a list of muscle entries with their recovery status
+ * @param {Object} props - Component props
+ * @param {Object} props.navigation - React Navigation object for screen navigation
+ * @returns {React.Component} HomeScreen component
+ */
 const HomeScreen = ({ navigation }) => {
   const { muscleEntries, loadEntries, isLoading } = useMuscleStore();
   const [refreshing, setRefreshing] = useState(false);
@@ -19,15 +26,43 @@ const HomeScreen = ({ navigation }) => {
   const { theme } = useTheme();
 
   useEffect(() => {
-    loadEntries();
-  }, []);
+    loadEntries().catch((error) => {
+      Alert.alert(
+        'Error',
+        'Failed to load muscle entries',
+        [{ text: 'OK' }]
+      );
+    });
+  }, [loadEntries]);
 
+  /**
+   * Handles pull-to-refresh functionality
+   * @async
+   * @function onRefresh
+   */
   const onRefresh = async () => {
     setRefreshing(true);
-    await loadEntries();
-    setRefreshing(false);
+    try {
+      await loadEntries();
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        'Failed to refresh muscle entries',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setRefreshing(false);
+    }
   };
 
+  /**
+   * Determines the status color based on recovery progress
+   * @param {Object} entry - Muscle entry object
+   * @param {string} entry.status - Current status of the muscle
+   * @param {number} entry.recoveryProgress - Current recovery progress
+   * @param {number} entry.recoveryTime - Total recovery time needed
+   * @returns {string} Hex color code for the status
+   */
   const getStatusColor = (entry) => {
     if (entry.status === 'ready') {
       return '#4CAF50'; // Green
@@ -41,8 +76,25 @@ const HomeScreen = ({ navigation }) => {
     return '#8BC34A'; // Light green
   };
 
+  /**
+   * Renders individual muscle entry item
+   * @param {Object} params - Render item parameters
+   * @param {Object} params.item - Muscle entry data
+   * @returns {React.Component} Rendered muscle entry card
+   */
   const renderItem = ({ item }) => {
     const statusColor = getStatusColor(item);
+    
+    /**
+     * Handles navigation to entry detail screen
+     */
+    const handlePress = () => {
+      try {
+        navigation.navigate('EntryDetail', { entryId: item.id });
+      } catch (error) {
+        Alert.alert('Navigation Error', 'Failed to open entry details');
+      }
+    };
     
     return (
       <TouchableOpacity
@@ -51,7 +103,9 @@ const HomeScreen = ({ navigation }) => {
           borderLeftWidth: 5,
           backgroundColor: theme.card
         }]}
-        onPress={() => navigation.navigate('EntryDetail', { entryId: item.id })}
+        onPress={handlePress}
+        accessibilityLabel={`${item.muscleName} muscle entry`}
+        accessibilityHint="Tap to view details"
       >
         <View style={styles.cardHeader}>
           <Text style={[styles.muscleName, { color: theme.text }]}>{item.muscleName}</Text>
@@ -209,5 +263,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
+
+// PropTypes validation
+HomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default HomeScreen;

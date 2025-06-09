@@ -8,8 +8,10 @@ import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import PropTypes from 'prop-types';
 import { ThemeProvider, useTheme } from './srccontext/ThemeContext';
 import ThemedHeader from './srccomponents/ThemedHeader';
+import ErrorBoundary from './srccomponents/ErrorBoundary';
 // Import screens
 import HomeScreen from './srcscreens/HomeScreen';
 import AddEntryScreen from './srcscreens/AddEntryScreen';
@@ -183,6 +185,10 @@ function MainStack() {
   );
 }
 
+/**
+ * Main App component with error boundary and theme provider
+ * @returns {React.Component} App component
+ */
 export default function App() {
   const { isAuthenticated, checkAuth } = useAuthStore();
   const { loadEntries } = useMuscleStore();
@@ -197,7 +203,7 @@ export default function App() {
           await loadEntries();
         }
       } catch (e) {
-        console.warn(e);
+        console.warn('App initialization error:', e);
       } finally {
         setAppIsReady(true);
         await SplashScreen.hideAsync();
@@ -220,11 +226,19 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <AppContent isAuthenticated={isAuthenticated} />
+      <ErrorBoundary onReset={() => setAppIsReady(false)}>
+        <AppContent isAuthenticated={isAuthenticated} />
+      </ErrorBoundary>
     </ThemeProvider>
   );
 };
 
+/**
+ * App content component that handles navigation based on authentication state
+ * @param {Object} props - Component props
+ * @param {boolean} props.isAuthenticated - Authentication status
+ * @returns {React.Component} App content component
+ */
 const AppContent = ({ isAuthenticated }) => {
   const { theme, isDarkMode } = useTheme();
   
@@ -239,3 +253,7 @@ const AppContent = ({ isAuthenticated }) => {
     </SafeAreaProvider>
   );
 }
+
+AppContent.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+};
